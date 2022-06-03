@@ -188,6 +188,13 @@ namespace UnityPackageExporter
                 Console.WriteLine("SKIP: " + assetFile);
                 return;
             }
+            
+            //If the file is a dot file, skip cause it's usually ignored by unity
+            if (assetFile.StartsWith("."))
+            {
+                Console.WriteLine("SKIP: " + assetFile);
+                return;
+            }
 
             //Make sure its not a meta file
             if (Path.GetExtension(assetFile).ToLowerInvariant() == ".meta")
