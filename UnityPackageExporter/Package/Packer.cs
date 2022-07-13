@@ -62,7 +62,7 @@ namespace UnityPackageExporter.Package
         public async Task<bool> AddAssetAsync(string filePath)
         {
             FileInfo file = new FileInfo(Path.GetExtension(filePath) == ".meta" ? filePath.Substring(0, filePath.Length - 5) : filePath);
-            if (!file.Exists) throw new FileNotFoundException();
+            if (!file.Exists) return false;// throw new FileNotFoundException();
             if (!_files.Add(file.FullName)) return false;
 
             string relativePath = Path.GetRelativePath(ProjectPath, file.FullName);
