@@ -218,14 +218,16 @@ namespace UnityPackageExporter
             {
                 //Meta file is missing so we have to generate it ourselves.
                 Console.WriteLine("MISSING ASSET FILE: " + assetFile);
+                Console.WriteLine("SKIP: " + relativePath);
+                return;
 
-                Guid guid = Guid.NewGuid();
+                /*Guid guid = Guid.NewGuid();
                 foreach (var byt in guid.ToByteArray())
                     guidString += string.Format("{0:X2}", byt);
 
                 var builder = new System.Text.StringBuilder();
                 builder.Append("guid: " + new Guid()).Append("\n");
-                metaContents = builder.ToString();
+                metaContents = builder.ToString();*/
             }
             else
             {
