@@ -31,7 +31,7 @@ namespace UnityPackageExporter.Package
         /// </summary>
         /// <param name="projectPath">Path to the Unity Project</param>
         /// <param name="output">The .unitypackage file</param>
-        public Packer(string projectPath, string output) : this(projectPath, new FileStream(output, FileMode.OpenOrCreate)) 
+        public Packer(string projectPath, string output) : this(projectPath, new FileStream(output, FileMode.OpenOrCreate))
         {
             OutputPath = output;
         }
@@ -61,7 +61,7 @@ namespace UnityPackageExporter.Package
         /// <returns>If the asset was written to the pack. </returns>
         public async Task<bool> AddAssetAsync(string filePath)
         {
-            FileInfo file = new FileInfo(Path.GetExtension(filePath) == ".meta" ? filePath.Substring(0, filePath.Length - 5) : filePath); 
+            FileInfo file = new FileInfo(Path.GetExtension(filePath) == ".meta" ? filePath.Substring(0, filePath.Length - 5) : filePath);
             if (!file.Exists) throw new FileNotFoundException();
             if (!_files.Add(file.FullName)) return false;
 
@@ -73,7 +73,8 @@ namespace UnityPackageExporter.Package
             if (!File.Exists(metaFile))
             {
                 //Meta file is missing so we have to generate it ourselves.
-                Logger.Warn("Missing .meta for {0}", relativePath);
+                Logger.Warn("Missing .meta for {0} , skipping", relativePath);
+                return false;
 
                 Guid guid = Guid.NewGuid();
                 foreach (var byt in guid.ToByteArray())
@@ -107,7 +108,7 @@ namespace UnityPackageExporter.Package
         /// <returns></returns>
         public async Task AddAssetsAsync(IEnumerable<string> assets)
         {
-            foreach(var asset in assets)
+            foreach (var asset in assets)
                 await AddAssetAsync(asset);
         }
 
